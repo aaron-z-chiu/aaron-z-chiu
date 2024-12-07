@@ -1,7 +1,7 @@
 - 👋 Hi, I’m @aaron-z-chiu.
-- 👀 I’m a collage student who is majoring in Computer Science.
-- 🌱 I’m currently studying Macau University of Science and Technology.
-- 💞️ I’m interested in C, C++, Java, Matlab, LateX
+- 👀 I’m a collage student pursuing BSc. in Computer Science.
+- 🌱 I’m currently studying at Macau University of Science and Technology.
+- 💞️ I’m interested in C, C++, Java, Matlab, LaTeX
 - 📫 You can reach me at aaron.z.chiu@gmail.com
 - 😄 Pronouns: he/him
 - 💬 Preferred Language: Chinese(native), English(Proficient), Cantonese(basic)
