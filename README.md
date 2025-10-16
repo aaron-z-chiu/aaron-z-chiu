@@ -3,7 +3,7 @@
 - 🌱 I’m currently studying at Macau University of Science and Technology.
 - 💞️ I’m interested in C, C++, Java, Matlab, LaTeX
 - 📫 You can reach me at aaron.z.chiu@gmail.com
-- 🌍 My personal website is [www.zecqiu.com](www.zecqiu.com)
+- 🌍 My personal website is www.zecqiu.com
 - 😄 Pronouns: he/him
 - 💬 Preferred Language: Chinese(native), English(Proficient), Cantonese(basic)
 
