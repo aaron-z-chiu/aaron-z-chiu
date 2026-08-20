@@ -1,3 +1,4 @@
+[![committers.top badge](https://user-badge.committers.top/macau/USERNAME.svg)](https://user-badge.committers.top/macau/aaron-z-chiu)
 - 👋 Hi, I’m @aaron-z-chiu.
 - 👀 I’m a collage student pursuing BSc. in Computer Science.
 - 🌱 I’m currently studying at Macau University of Science and Technology.
