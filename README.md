@@ -14,10 +14,12 @@
 [![committers.top badge](https://user-badge.committers.top/macau/aaron-z-chiu.svg)](https://user-badge.committers.top/macau/aaron-z-chiu)
 
 
+<!-- PROFILE-STATS:START -->
 <p>
-  <img src="./assets/github-stats.svg" width="49%" />
-  <img src="./assets/top-languages.svg" width="49%" />
+  <img src="./assets/github-stats-59ba644837.svg" width="49%" />
+  <img src="./assets/top-languages-8775da1f94.svg" width="49%" />
 </p>
+<!-- PROFILE-STATS:END -->
 
 
 
