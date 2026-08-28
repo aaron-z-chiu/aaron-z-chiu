@@ -15,7 +15,7 @@
 
 
 <p>
-  <img src="./assets/github-stats.svg?x" width="49%" />
+  <img src="./assets/github-stats.svg?v=2" width="49%" />
   <img src="./assets/top-languages.svg" width="49%" />
 </p>
 
