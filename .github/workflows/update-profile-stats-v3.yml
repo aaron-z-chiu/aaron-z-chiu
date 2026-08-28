@@ -1,0 +1,49 @@
+name: Update Profile Stats v3
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "23 3 * * 1,4"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-stats-v3
+  cancel-in-progress: true
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate profile stats
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USERNAME: aaron-z-chiu
+        run: |
+          python scripts/generate_profile_stats_v3.py
+
+      - name: Commit updated profile cards
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A README.md assets/
+
+          if git diff --cached --quiet; then
+            echo "No profile stats changed."
+            exit 0
+          fi
+
+          git commit -m "chore: update profile stats"
+          git push
