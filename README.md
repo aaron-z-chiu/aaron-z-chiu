@@ -15,6 +15,12 @@
 [![committers.top badge](https://user-badge.committers.top/macau/aaron-z-chiu.svg)](https://user-badge.committers.top/macau/aaron-z-chiu)
 
 
+<p>
+  <img src="./assets/github-stats.svg" width="49%" />
+  <img src="./assets/top-languages.svg" width="49%" />
+</p>
+
+
 
 
 
