@@ -70,30 +70,30 @@
 </text>
 
 <text class="label" x="20" y="93">
-    Contributions · last year
+    Contributions · past 12 months
 </text>
 
 <text class="value" x="240" y="73">
-    6
+    85
 </text>
 
 <text class="label" x="240" y="93">
-    Public repositories
+    Active days · past 12 months
 </text>
 
 <text class="value" x="20" y="135">
-    0
+    4 days
 </text>
 
 <text class="label" x="20" y="155">
-    Pull requests
+    Longest streak
 </text>
 
 <text class="value" x="240" y="135">
-    0
+    6
 </text>
 
 <text class="label" x="240" y="155">
-    Issues
+    Public repositories
 </text>
 </svg>
