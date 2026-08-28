@@ -1,4 +1,4 @@
-### 👋 Hi, I’m @aaron-z-chiu.
+### 👋 Hi, I’m Aaron.
 - 🎓 I’m a undergraduate student pursuing BSc. in Computer Science.
 - 🏫 I’m currently studying at Macau University of Science and Technology.
 - 💞️ I’m interested in C, C++, Java, Matlab, LaTeX
