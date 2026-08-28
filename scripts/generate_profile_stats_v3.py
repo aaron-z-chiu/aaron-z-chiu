@@ -1,0 +1,566 @@
+import hashlib
+import json
+import os
+import re
+import urllib.parse
+import urllib.request
+from collections import defaultdict
+from datetime import datetime, timedelta, timezone
+from html import escape
+from pathlib import Path
+
+
+USERNAME = os.environ.get("GITHUB_USERNAME", "aaron-z-chiu")
+TOKEN = os.environ["GITHUB_TOKEN"]
+
+README_PATH = Path("README.md")
+OUTPUT_DIR = Path("assets")
+
+EXCLUDED_REPOS = {
+    USERNAME,  # Exclude the profile README repository from language stats.
+}
+
+EXCLUDED_LANGUAGES = {
+    # "TeX",
+    # "HTML",
+}
+
+TOP_N_LANGUAGES = 6
+
+STATS_START = "<!-- PROFILE-STATS:START -->"
+STATS_END = "<!-- PROFILE-STATS:END -->"
+
+LANGUAGE_COLORS = {
+    "Python": "#3572A5",
+    "C++": "#f34b7d",
+    "C": "#555555",
+    "Java": "#b07219",
+    "MATLAB": "#e16737",
+    "TeX": "#3D6117",
+    "JavaScript": "#f1e05a",
+    "TypeScript": "#3178c6",
+    "HTML": "#e34c26",
+    "CSS": "#563d7c",
+    "Shell": "#89e051",
+    "Jupyter Notebook": "#DA5B0B",
+    "Rust": "#dea584",
+    "Go": "#00ADD8",
+}
+
+
+def github_request(url, method="GET", data=None):
+    headers = {
+        "Authorization": f"Bearer {TOKEN}",
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+        "User-Agent": "github-profile-stats",
+    }
+
+    if data is not None:
+        body = json.dumps(data).encode("utf-8")
+        headers["Content-Type"] = "application/json"
+    else:
+        body = None
+
+    request = urllib.request.Request(
+        url,
+        data=body,
+        headers=headers,
+        method=method,
+    )
+
+    with urllib.request.urlopen(request) as response:
+        return json.load(response)
+
+
+def get_public_repos():
+    repos = []
+    page = 1
+
+    while True:
+        url = (
+            f"https://api.github.com/users/{urllib.parse.quote(USERNAME)}/repos"
+            f"?type=owner&per_page=100&page={page}"
+        )
+
+        batch = github_request(url)
+
+        if not batch:
+            break
+
+        repos.extend(batch)
+
+        if len(batch) < 100:
+            break
+
+        page += 1
+
+    return repos
+
+
+def get_contribution_activity():
+    """
+    Return contribution statistics for the rolling past 12 months:
+      - total_contributions
+      - active_days
+      - longest_streak
+
+    A day is active when GitHub reports contributionCount > 0.
+    Longest streak is the longest consecutive run of active calendar days
+    inside this same rolling 365-day window.
+    """
+    now = datetime.now(timezone.utc)
+    start = now - timedelta(days=365)
+
+    query = """
+    query($login: String!, $from: DateTime!, $to: DateTime!) {
+      user(login: $login) {
+        contributionsCollection(from: $from, to: $to) {
+          contributionCalendar {
+            totalContributions
+            weeks {
+              contributionDays {
+                date
+                contributionCount
+              }
+            }
+          }
+        }
+      }
+    }
+    """
+
+    variables = {
+        "login": USERNAME,
+        "from": start.isoformat(),
+        "to": now.isoformat(),
+    }
+
+    result = github_request(
+        "https://api.github.com/graphql",
+        method="POST",
+        data={
+            "query": query,
+            "variables": variables,
+        },
+    )
+
+    if "errors" in result:
+        raise RuntimeError(
+            "GitHub GraphQL returned errors: "
+            + json.dumps(result["errors"], ensure_ascii=False)
+        )
+
+    calendar = result["data"]["user"]["contributionsCollection"][
+        "contributionCalendar"
+    ]
+
+    start_date = start.date().isoformat()
+    end_date = now.date().isoformat()
+
+    days = []
+    for week in calendar["weeks"]:
+        for day in week["contributionDays"]:
+            if start_date <= day["date"] <= end_date:
+                days.append(
+                    {
+                        "date": day["date"],
+                        "count": day["contributionCount"],
+                    }
+                )
+
+    days.sort(key=lambda item: item["date"])
+
+    active_days = sum(1 for day in days if day["count"] > 0)
+
+    longest_streak = 0
+    current_streak = 0
+
+    for day in days:
+        if day["count"] > 0:
+            current_streak += 1
+            longest_streak = max(longest_streak, current_streak)
+        else:
+            current_streak = 0
+
+    return {
+        "total_contributions": calendar["totalContributions"],
+        "active_days": active_days,
+        "longest_streak": longest_streak,
+    }
+
+
+def get_language_totals(repos):
+    totals = defaultdict(int)
+
+    for repo in repos:
+        name = repo["name"]
+
+        if repo["fork"] or repo["archived"] or name in EXCLUDED_REPOS:
+            continue
+
+        print(f"Reading languages: {name}")
+
+        languages = github_request(
+            f"https://api.github.com/repos/"
+            f"{urllib.parse.quote(USERNAME)}/"
+            f"{urllib.parse.quote(name)}/languages"
+        )
+
+        for language, byte_count in languages.items():
+            if language not in EXCLUDED_LANGUAGES:
+                totals[language] += byte_count
+
+    return totals
+
+
+def compact_number(value):
+    if value >= 1_000_000:
+        return f"{value / 1_000_000:.1f}m"
+    if value >= 1_000:
+        return f"{value / 1_000:.1f}k"
+    return str(value)
+
+
+def svg_header(width, height):
+    return f"""<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="{width}"
+    height="{height}"
+    viewBox="0 0 {width} {height}"
+    role="img"
+>
+<style>
+    .card {{
+        fill: #ffffff;
+        stroke: #d0d7de;
+        stroke-width: 1;
+    }}
+
+    .title {{
+        fill: #1f2328;
+        font: 600 18px -apple-system, BlinkMacSystemFont,
+              "Segoe UI", Helvetica, Arial, sans-serif;
+    }}
+
+    .label {{
+        fill: #656d76;
+        font: 400 12px -apple-system, BlinkMacSystemFont,
+              "Segoe UI", Helvetica, Arial, sans-serif;
+    }}
+
+    .value {{
+        fill: #1f2328;
+        font: 600 22px -apple-system, BlinkMacSystemFont,
+              "Segoe UI", Helvetica, Arial, sans-serif;
+    }}
+
+    .language {{
+        fill: #1f2328;
+        font: 400 13px -apple-system, BlinkMacSystemFont,
+              "Segoe UI", Helvetica, Arial, sans-serif;
+    }}
+
+    @media (prefers-color-scheme: dark) {{
+        .card {{
+            fill: #0d1117;
+            stroke: #30363d;
+        }}
+
+        .title,
+        .value,
+        .language {{
+            fill: #e6edf3;
+        }}
+
+        .label {{
+            fill: #8d96a0;
+        }}
+    }}
+</style>
+"""
+
+
+def generate_stats_svg(stats):
+    width = 460
+    height = 180
+
+    metrics = [
+        (
+            compact_number(stats["contributions"]),
+            "Contributions · past 12 months",
+        ),
+        (
+            compact_number(stats["active_days"]),
+            "Active days · past 12 months",
+        ),
+        (
+            f'{compact_number(stats["longest_streak"])} days',
+            "Longest streak",
+        ),
+        (
+            compact_number(stats["public_repos"]),
+            "Public repositories",
+        ),
+    ]
+
+    svg = svg_header(width, height)
+
+    svg += f"""
+<rect class="card"
+      x="0.5"
+      y="0.5"
+      width="{width - 1}"
+      height="{height - 1}"
+      rx="8"/>
+
+<text class="title" x="20" y="31">
+    GitHub Activity
+</text>
+"""
+
+    positions = [
+        (20, 73),
+        (240, 73),
+        (20, 135),
+        (240, 135),
+    ]
+
+    for (value, label), (x, y) in zip(metrics, positions):
+        svg += f"""
+<text class="value" x="{x}" y="{y}">
+    {escape(value)}
+</text>
+
+<text class="label" x="{x}" y="{y + 20}">
+    {escape(label)}
+</text>
+"""
+
+    svg += "</svg>\n"
+    return svg
+
+
+def generate_languages_svg(language_totals):
+    width = 460
+    height = 180
+
+    total = sum(language_totals.values())
+    sorted_languages = sorted(
+        language_totals.items(),
+        key=lambda item: item[1],
+        reverse=True,
+    )
+    top_languages = sorted_languages[:TOP_N_LANGUAGES]
+
+    svg = svg_header(width, height)
+
+    svg += f"""
+<rect class="card"
+      x="0.5"
+      y="0.5"
+      width="{width - 1}"
+      height="{height - 1}"
+      rx="8"/>
+
+<text class="title" x="20" y="31">
+    Most Used Languages
+</text>
+"""
+
+    if total == 0:
+        svg += """
+<text class="label" x="20" y="80">
+    No language data available.
+</text>
+</svg>
+"""
+        return svg
+
+    bar_x = 20
+    bar_y = 50
+    bar_width = 420
+    bar_height = 10
+
+    displayed_total = sum(count for _, count in top_languages)
+    current_x = bar_x
+
+    for language, count in top_languages:
+        fraction = count / displayed_total
+        width_piece = bar_width * fraction
+        color = LANGUAGE_COLORS.get(language, "#8c959f")
+
+        svg += f"""
+<rect
+    x="{current_x:.2f}"
+    y="{bar_y}"
+    width="{width_piece:.2f}"
+    height="{bar_height}"
+    fill="{color}"
+    rx="2"
+/>
+"""
+        current_x += width_piece
+
+    for index, (language, count) in enumerate(top_languages):
+        percentage = count / total * 100
+        column = index % 2
+        row = index // 2
+
+        x = 20 + column * 220
+        y = 88 + row * 27
+        color = LANGUAGE_COLORS.get(language, "#8c959f")
+
+        svg += f"""
+<circle
+    cx="{x + 5}"
+    cy="{y - 4}"
+    r="5"
+    fill="{color}"
+/>
+
+<text class="language"
+      x="{x + 17}"
+      y="{y}">
+    {escape(language)}
+</text>
+
+<text class="label"
+      x="{x + 155}"
+      y="{y}">
+    {percentage:.1f}%
+</text>
+"""
+
+    svg += "</svg>\n"
+    return svg
+
+
+def content_hash(text):
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:10]
+
+
+def write_hashed_svg(prefix, svg_text):
+    digest = content_hash(svg_text)
+    filename = f"{prefix}-{digest}.svg"
+    path = OUTPUT_DIR / filename
+    path.write_text(svg_text, encoding="utf-8")
+    return path
+
+
+def build_readme_block(stats_path, languages_path):
+    return f"""{STATS_START}
+<p>
+  <img src="./{stats_path.as_posix()}" width="49%" />
+  <img src="./{languages_path.as_posix()}" width="49%" />
+</p>
+{STATS_END}"""
+
+
+def update_readme(stats_path, languages_path):
+    if not README_PATH.exists():
+        raise FileNotFoundError("README.md was not found.")
+
+    readme = README_PATH.read_text(encoding="utf-8")
+    new_block = build_readme_block(stats_path, languages_path)
+
+    marker_pattern = re.compile(
+        re.escape(STATS_START) + r".*?" + re.escape(STATS_END),
+        flags=re.DOTALL,
+    )
+
+    if marker_pattern.search(readme):
+        updated = marker_pattern.sub(new_block, readme, count=1)
+
+    else:
+        # One-time migration from the old fixed-file block.
+        paragraph_pattern = re.compile(r"<p>.*?</p>", flags=re.DOTALL)
+        target_match = None
+
+        for match in paragraph_pattern.finditer(readme):
+            block = match.group(0)
+            if (
+                "assets/github-stats" in block
+                and "assets/top-languages" in block
+            ):
+                target_match = match
+                break
+
+        if target_match is None:
+            raise RuntimeError(
+                "Could not locate the profile-stats block in README.md. "
+                f"Add {STATS_START} and {STATS_END} around the two stats "
+                "images, then run the workflow again."
+            )
+
+        updated = (
+            readme[: target_match.start()]
+            + new_block
+            + readme[target_match.end() :]
+        )
+
+    README_PATH.write_text(updated, encoding="utf-8")
+
+
+def cleanup_old_svgs(current_paths):
+    keep = {path.resolve() for path in current_paths}
+
+    for pattern in ("github-stats*.svg", "top-languages*.svg"):
+        for path in OUTPUT_DIR.glob(pattern):
+            if path.resolve() not in keep:
+                print(f"Removing stale asset: {path}")
+                path.unlink()
+
+
+def main():
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    print(f"Generating profile statistics for @{USERNAME}")
+
+    repos = get_public_repos()
+
+    original_repos = [
+        repo
+        for repo in repos
+        if not repo["fork"] and not repo["archived"]
+    ]
+
+    contribution_activity = get_contribution_activity()
+
+    stats = {
+        "contributions": contribution_activity["total_contributions"],
+        "active_days": contribution_activity["active_days"],
+        "longest_streak": contribution_activity["longest_streak"],
+        "public_repos": len(original_repos),
+    }
+
+    language_totals = get_language_totals(repos)
+
+    stats_svg = generate_stats_svg(stats)
+    languages_svg = generate_languages_svg(language_totals)
+
+    stats_path = write_hashed_svg("github-stats", stats_svg)
+    languages_path = write_hashed_svg("top-languages", languages_svg)
+
+    # Content-addressed filenames make the README image URL change whenever
+    # the SVG changes, which avoids stale GitHub/Camo image cache.
+    update_readme(stats_path, languages_path)
+
+    # Remove previous generated card files only after README points to the new ones.
+    cleanup_old_svgs({stats_path, languages_path})
+
+    print("Generated:")
+    print(f"  {stats_path}")
+    print(f"  {languages_path}")
+    print("Updated:")
+    print("  README.md")
+
+    print("Activity:")
+    print(f'  Contributions (past 12 months): {stats["contributions"]}')
+    print(f'  Active days (past 12 months):   {stats["active_days"]}')
+    print(f'  Longest streak:                 {stats["longest_streak"]} days')
+    print(f'  Public repositories:            {stats["public_repos"]}')
+
+
+if __name__ == "__main__":
+    main()
