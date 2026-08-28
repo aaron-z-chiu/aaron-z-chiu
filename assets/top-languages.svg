@@ -1,0 +1,235 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="460"
+    height="180"
+    viewBox="0 0 460 180"
+    role="img"
+>
+<style>
+    .card {
+        fill: #ffffff;
+        stroke: #d0d7de;
+        stroke-width: 1;
+    }
+
+    .title {
+        fill: #1f2328;
+        font: 600 18px -apple-system, BlinkMacSystemFont,
+              "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+
+    .label {
+        fill: #656d76;
+        font: 400 12px -apple-system, BlinkMacSystemFont,
+              "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+
+    .value {
+        fill: #1f2328;
+        font: 600 22px -apple-system, BlinkMacSystemFont,
+              "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+
+    .language {
+        fill: #1f2328;
+        font: 400 13px -apple-system, BlinkMacSystemFont,
+              "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .card {
+            fill: #0d1117;
+            stroke: #30363d;
+        }
+
+        .title,
+        .value,
+        .language {
+            fill: #e6edf3;
+        }
+
+        .label {
+            fill: #8d96a0;
+        }
+    }
+</style>
+
+<rect class="card"
+      x="0.5"
+      y="0.5"
+      width="459"
+      height="179"
+      rx="8"/>
+
+<text class="title" x="20" y="31">
+    Most Used Languages
+</text>
+
+<rect
+    x="20.00"
+    y="50"
+    width="269.56"
+    height="10"
+    fill="#f34b7d"
+    rx="2"
+/>
+
+<rect
+    x="289.56"
+    y="50"
+    width="64.87"
+    height="10"
+    fill="#f1e05a"
+    rx="2"
+/>
+
+<rect
+    x="354.43"
+    y="50"
+    width="48.34"
+    height="10"
+    fill="#e16737"
+    rx="2"
+/>
+
+<rect
+    x="402.77"
+    y="50"
+    width="22.89"
+    height="10"
+    fill="#555555"
+    rx="2"
+/>
+
+<rect
+    x="425.66"
+    y="50"
+    width="5.12"
+    height="10"
+    fill="#8c959f"
+    rx="2"
+/>
+
+<rect
+    x="430.77"
+    y="50"
+    width="5.03"
+    height="10"
+    fill="#e34c26"
+    rx="2"
+/>
+
+<circle
+    cx="25"
+    cy="84"
+    r="5"
+    fill="#f34b7d"
+/>
+
+<text class="language"
+      x="37"
+      y="88">
+    C++
+</text>
+
+<text class="label"
+      x="175"
+      y="88">
+    64.2%
+</text>
+
+<circle
+    cx="245"
+    cy="84"
+    r="5"
+    fill="#f1e05a"
+/>
+
+<text class="language"
+      x="257"
+      y="88">
+    JavaScript
+</text>
+
+<text class="label"
+      x="395"
+      y="88">
+    15.4%
+</text>
+
+<circle
+    cx="25"
+    cy="111"
+    r="5"
+    fill="#e16737"
+/>
+
+<text class="language"
+      x="37"
+      y="115">
+    MATLAB
+</text>
+
+<text class="label"
+      x="175"
+      y="115">
+    11.5%
+</text>
+
+<circle
+    cx="245"
+    cy="111"
+    r="5"
+    fill="#555555"
+/>
+
+<text class="language"
+      x="257"
+      y="115">
+    C
+</text>
+
+<text class="label"
+      x="395"
+      y="115">
+    5.4%
+</text>
+
+<circle
+    cx="25"
+    cy="138"
+    r="5"
+    fill="#8c959f"
+/>
+
+<text class="language"
+      x="37"
+      y="142">
+    Makefile
+</text>
+
+<text class="label"
+      x="175"
+      y="142">
+    1.2%
+</text>
+
+<circle
+    cx="245"
+    cy="138"
+    r="5"
+    fill="#e34c26"
+/>
+
+<text class="language"
+      x="257"
+      y="142">
+    HTML
+</text>
+
+<text class="label"
+      x="395"
+      y="142">
+    1.2%
+</text>
+</svg>
