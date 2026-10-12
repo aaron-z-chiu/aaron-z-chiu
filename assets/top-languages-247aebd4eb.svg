@@ -68,54 +68,54 @@
 <rect
     x="20.00"
     y="50"
-    width="272.28"
+    width="257.54"
     height="10"
     fill="#f34b7d"
     rx="2"
 />
 
 <rect
-    x="292.28"
+    x="277.54"
     y="50"
-    width="65.53"
+    width="61.98"
     height="10"
     fill="#f1e05a"
     rx="2"
 />
 
 <rect
-    x="357.80"
+    x="339.52"
     y="50"
-    width="48.83"
+    width="46.19"
     height="10"
     fill="#e16737"
     rx="2"
 />
 
 <rect
-    x="406.63"
+    x="385.71"
     y="50"
-    width="23.12"
+    width="27.54"
+    height="10"
+    fill="#3D6117"
+    rx="2"
+/>
+
+<rect
+    x="413.24"
+    y="50"
+    width="21.87"
     height="10"
     fill="#555555"
     rx="2"
 />
 
 <rect
-    x="429.75"
+    x="435.11"
     y="50"
-    width="5.17"
+    width="4.89"
     height="10"
     fill="#8c959f"
-    rx="2"
-/>
-
-<rect
-    x="434.92"
-    y="50"
-    width="5.08"
-    height="10"
-    fill="#e34c26"
     rx="2"
 />
 
@@ -135,7 +135,7 @@
 <text class="label"
       x="175"
       y="88">
-    64.2%
+    60.1%
 </text>
 
 <circle
@@ -154,7 +154,7 @@
 <text class="label"
       x="395"
       y="88">
-    15.4%
+    14.5%
 </text>
 
 <circle
@@ -173,63 +173,63 @@
 <text class="label"
       x="175"
       y="115">
-    11.5%
+    10.8%
 </text>
 
 <circle
     cx="245"
     cy="111"
     r="5"
-    fill="#555555"
+    fill="#3D6117"
 />
 
 <text class="language"
       x="257"
       y="115">
-    C
+    TeX
 </text>
 
 <text class="label"
       x="395"
       y="115">
-    5.4%
+    6.4%
 </text>
 
 <circle
     cx="25"
     cy="138"
     r="5"
-    fill="#8c959f"
+    fill="#555555"
 />
 
 <text class="language"
       x="37"
       y="142">
-    Makefile
+    C
 </text>
 
 <text class="label"
       x="175"
       y="142">
-    1.2%
+    5.1%
 </text>
 
 <circle
     cx="245"
     cy="138"
     r="5"
-    fill="#e34c26"
+    fill="#8c959f"
 />
 
 <text class="language"
       x="257"
       y="142">
-    HTML
+    Makefile
 </text>
 
 <text class="label"
       x="395"
       y="142">
-    1.2%
+    1.1%
 </text>
 </svg>
