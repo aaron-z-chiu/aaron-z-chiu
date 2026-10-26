@@ -68,54 +68,54 @@
 <rect
     x="20.00"
     y="50"
-    width="251.36"
+    width="235.20"
     height="10"
     fill="#f34b7d"
     rx="2"
 />
 
 <rect
-    x="271.36"
+    x="255.20"
     y="50"
-    width="60.49"
+    width="56.60"
     height="10"
     fill="#f1e05a"
     rx="2"
 />
 
 <rect
-    x="331.85"
+    x="311.80"
     y="50"
-    width="45.08"
+    width="42.18"
     height="10"
     fill="#e16737"
     rx="2"
 />
 
 <rect
-    x="376.92"
+    x="353.98"
     y="50"
-    width="36.96"
+    width="34.22"
     height="10"
     fill="#3D6117"
     rx="2"
 />
 
 <rect
-    x="413.89"
+    x="388.20"
     y="50"
-    width="21.34"
+    width="31.83"
     height="10"
-    fill="#555555"
+    fill="#8c959f"
     rx="2"
 />
 
 <rect
-    x="435.23"
+    x="420.03"
     y="50"
-    width="4.77"
+    width="19.97"
     height="10"
-    fill="#8c959f"
+    fill="#555555"
     rx="2"
 />
 
@@ -135,7 +135,7 @@
 <text class="label"
       x="175"
       y="88">
-    58.6%
+    54.4%
 </text>
 
 <circle
@@ -154,7 +154,7 @@
 <text class="label"
       x="395"
       y="88">
-    14.1%
+    13.1%
 </text>
 
 <circle
@@ -173,7 +173,7 @@
 <text class="label"
       x="175"
       y="115">
-    10.5%
+    9.8%
 </text>
 
 <circle
@@ -192,44 +192,44 @@
 <text class="label"
       x="395"
       y="115">
-    8.6%
+    7.9%
 </text>
 
 <circle
     cx="25"
     cy="138"
     r="5"
-    fill="#555555"
+    fill="#8c959f"
 />
 
 <text class="language"
       x="37"
       y="142">
-    C
+    BibTeX Style
 </text>
 
 <text class="label"
       x="175"
       y="142">
-    5.0%
+    7.4%
 </text>
 
 <circle
     cx="245"
     cy="138"
     r="5"
-    fill="#8c959f"
+    fill="#555555"
 />
 
 <text class="language"
       x="257"
       y="142">
-    Makefile
+    C
 </text>
 
 <text class="label"
       x="395"
       y="142">
-    1.1%
+    4.6%
 </text>
 </svg>
