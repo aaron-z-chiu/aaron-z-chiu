@@ -15,7 +15,7 @@
 
 <!-- PROFILE-STATS:START -->
 <p>
-  <img src="./assets/github-stats-8e19a8880b.svg" width="49%" />
+  <img src="./assets/github-stats-93c046a1f0.svg" width="49%" />
   <img src="./assets/top-languages-62fa4ec4cd.svg" width="49%" />
 </p>
 <!-- PROFILE-STATS:END -->
