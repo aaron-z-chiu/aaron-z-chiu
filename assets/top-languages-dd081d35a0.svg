@@ -68,54 +68,54 @@
 <rect
     x="20.00"
     y="50"
-    width="235.20"
+    width="180.00"
+    height="10"
+    fill="#3178c6"
+    rx="2"
+/>
+
+<rect
+    x="200.00"
+    y="50"
+    width="130.42"
     height="10"
     fill="#f34b7d"
     rx="2"
 />
 
 <rect
-    x="255.20"
+    x="330.42"
     y="50"
-    width="56.60"
+    width="49.57"
     height="10"
     fill="#f1e05a"
     rx="2"
 />
 
 <rect
-    x="311.80"
+    x="379.99"
     y="50"
-    width="42.18"
+    width="23.39"
     height="10"
     fill="#e16737"
     rx="2"
 />
 
 <rect
-    x="353.98"
+    x="403.38"
     y="50"
-    width="34.22"
+    width="18.97"
     height="10"
     fill="#3D6117"
     rx="2"
 />
 
 <rect
-    x="388.20"
+    x="422.35"
     y="50"
-    width="31.83"
+    width="17.65"
     height="10"
     fill="#8c959f"
-    rx="2"
-/>
-
-<rect
-    x="420.03"
-    y="50"
-    width="19.97"
-    height="10"
-    fill="#555555"
     rx="2"
 />
 
@@ -123,113 +123,113 @@
     cx="25"
     cy="84"
     r="5"
-    fill="#f34b7d"
+    fill="#3178c6"
 />
 
 <text class="language"
       x="37"
+      y="88">
+    TypeScript
+</text>
+
+<text class="label"
+      x="175"
+      y="88">
+    40.9%
+</text>
+
+<circle
+    cx="245"
+    cy="84"
+    r="5"
+    fill="#f34b7d"
+/>
+
+<text class="language"
+      x="257"
       y="88">
     C++
 </text>
 
 <text class="label"
-      x="175"
+      x="395"
       y="88">
-    54.4%
+    29.7%
 </text>
 
 <circle
-    cx="245"
-    cy="84"
+    cx="25"
+    cy="111"
     r="5"
     fill="#f1e05a"
 />
 
 <text class="language"
-      x="257"
-      y="88">
+      x="37"
+      y="115">
     JavaScript
 </text>
 
 <text class="label"
-      x="395"
-      y="88">
-    13.1%
+      x="175"
+      y="115">
+    11.3%
 </text>
 
 <circle
-    cx="25"
+    cx="245"
     cy="111"
     r="5"
     fill="#e16737"
 />
 
 <text class="language"
-      x="37"
+      x="257"
       y="115">
     MATLAB
 </text>
 
 <text class="label"
-      x="175"
-      y="115">
-    9.8%
-</text>
-
-<circle
-    cx="245"
-    cy="111"
-    r="5"
-    fill="#3D6117"
-/>
-
-<text class="language"
-      x="257"
-      y="115">
-    TeX
-</text>
-
-<text class="label"
       x="395"
       y="115">
-    7.9%
+    5.3%
 </text>
 
 <circle
     cx="25"
     cy="138"
     r="5"
-    fill="#8c959f"
+    fill="#3D6117"
 />
 
 <text class="language"
       x="37"
       y="142">
-    BibTeX Style
+    TeX
 </text>
 
 <text class="label"
       x="175"
       y="142">
-    7.4%
+    4.3%
 </text>
 
 <circle
     cx="245"
     cy="138"
     r="5"
-    fill="#555555"
+    fill="#8c959f"
 />
 
 <text class="language"
       x="257"
       y="142">
-    C
+    BibTeX Style
 </text>
 
 <text class="label"
       x="395"
       y="142">
-    4.6%
+    4.0%
 </text>
 </svg>
