@@ -1,4 +1,4 @@
-### 👋 Hi, I’m Aaron.
+### 👋 Hi, I’m Aaron Zecheng Qiu.
 - 🎓 I’m an undergraduate student pursuing a B.Sc. in Computer Science at Macau University of Science and Technology.
 - 📫 You can reach me at <aaron.z.chiu@gmail.com>
 - 😄 Pronouns: he/him
