@@ -68,52 +68,52 @@
 <rect
     x="20.00"
     y="50"
-    width="180.00"
+    width="184.71"
     height="10"
     fill="#3178c6"
     rx="2"
 />
 
 <rect
-    x="200.00"
+    x="204.71"
     y="50"
-    width="130.42"
+    width="127.86"
     height="10"
     fill="#f34b7d"
     rx="2"
 />
 
 <rect
-    x="330.42"
+    x="332.57"
     y="50"
-    width="49.57"
+    width="48.60"
     height="10"
     fill="#f1e05a"
     rx="2"
 />
 
 <rect
-    x="379.99"
+    x="381.17"
     y="50"
-    width="23.39"
+    width="22.93"
     height="10"
     fill="#e16737"
     rx="2"
 />
 
 <rect
-    x="403.38"
+    x="404.10"
     y="50"
-    width="18.97"
+    width="18.60"
     height="10"
     fill="#3D6117"
     rx="2"
 />
 
 <rect
-    x="422.35"
+    x="422.70"
     y="50"
-    width="17.65"
+    width="17.30"
     height="10"
     fill="#8c959f"
     rx="2"
@@ -135,7 +135,7 @@
 <text class="label"
       x="175"
       y="88">
-    40.9%
+    41.4%
 </text>
 
 <circle
@@ -154,7 +154,7 @@
 <text class="label"
       x="395"
       y="88">
-    29.7%
+    28.7%
 </text>
 
 <circle
@@ -173,7 +173,7 @@
 <text class="label"
       x="175"
       y="115">
-    11.3%
+    10.9%
 </text>
 
 <circle
@@ -192,7 +192,7 @@
 <text class="label"
       x="395"
       y="115">
-    5.3%
+    5.1%
 </text>
 
 <circle
@@ -211,7 +211,7 @@
 <text class="label"
       x="175"
       y="142">
-    4.3%
+    4.2%
 </text>
 
 <circle
@@ -230,6 +230,6 @@
 <text class="label"
       x="395"
       y="142">
-    4.0%
+    3.9%
 </text>
 </svg>
